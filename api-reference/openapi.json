@@ -125,7 +125,7 @@
             "properties": {
               "email": {
                 "description": "Email address used to login",
-                "type": "string",
+                "type": "string"
               },
               "password": {
                 "description": "Password used to login",
