@@ -1,8 +1,11 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "MyxSpend API",
+    "title": "MyxSpend AP",
     "description": "API for processing payments via MyxSpend",
+    "license": {
+      "name": "MIT"
+    },
     "version": "1.0.0"
   },
   "servers": [
@@ -10,37 +13,43 @@
       "url": "https://apidocs.myxspend.com/v1"
     }
   ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
     "/auth/login": {
       "post": {
-        "summary": "Authenticate and retrieve a bearer token",
+        "description": "Authenticate and retrieve a bearer token and headers",
         "requestBody": {
-          "required": true,
+          "description": "Get details to use for future Process Payments",
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "email": { "type": "string" },
-                  "password": { "type": "string" }
-                },
-                "required": ["email", "password"]
+                "$ref": "#/components/schemas/Login"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "Successful authentication",
+            "description": "plant response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": { "type": "string" },
-                    "X-API-KEY": { "type": "string" },
-                    "X-COMPANY-ID": { "type": "string" }
-                  }
+                  "$ref": "#/components/schemas/Plant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -50,36 +59,35 @@
     },
     "/payment/process": {
       "post": {
-        "summary": "Process a payment transaction",
-        "security": [{ "bearerAuth": [] }],
+        "description": "Process a payment transaction",
         "requestBody": {
-          "required": true,
+          "description": "Plant to add to the store",
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "amount": { "type": "number" },
-                  "currency": { "type": "string" },
-                  "payment_method": { "type": "string" },
-                  "customer_id": { "type": "string" }
-                },
-                "required": ["amount", "currency", "payment_method", "customer_id"]
+                "$ref": "#/components/schemas/Login"
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "Payment processed successfully",
+            "description": "plant response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transaction_id": { "type": "string" },
-                    "status": { "type": "string" }
-                  }
+                  "$ref": "#/components/schemas/Plant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -89,6 +97,62 @@
     }
   },
   "components": {
+    "schemas": {
+      "Plant": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the plant",
+            "type": "string"
+          },
+          "tag": {
+            "description": "Tag to specify the type",
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "allOf": [
+          {
+            "required": [
+              "email",
+              "password"
+            ],
+            "type": "object",
+            "properties": {
+              "email": {
+                "description": "Email address used to login",
+                "type": "string",
+              },
+              "password": {
+                "description": "Password used to login",
+                "type": "string"
+                
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "required": [
+          "error",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
