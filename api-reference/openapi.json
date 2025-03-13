@@ -78,6 +78,20 @@
         "responses": {
           "200": {
             "description": "plant response",
+            "headers": {
+      "X-Rate-Limit-Remaining": {
+        "description": "The number of requests left for the time window",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "Content-Type": {
+        "description": "Content type of the response",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
             "content": {
               "application/json": {
                 "schema": {
