@@ -34,7 +34,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {
+                    "accountId": { "type": "string" },
+                    "email": { "type": "string" },
+                    "redirectPath": { "type": "string" 
+                    "roles": [{ "type": "string" }],
+                    "token": { "type": "string" },
+                    }
+                  }
                 }
               }
             }
@@ -61,7 +69,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "$ref": "#/components/schemas/Payment"
               }
             }
           },
@@ -94,7 +102,7 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
+      "Payment": {
         "required": [
           "name"
         ],
@@ -139,11 +147,11 @@
         ],
         "type": "object",
         "properties": {
-          "error": {
+          "errorCode": {
             "type": "integer",
             "format": "int32"
           },
-          "message": {
+          "description": {
             "type": "string"
           }
         }
