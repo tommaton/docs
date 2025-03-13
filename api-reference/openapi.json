@@ -40,7 +40,7 @@
                     "email": { "type": "string" },
                     "redirectPath": { "type": "string" 
                     "roles": [{ "type": "string" }],
-                    "token": { "type": "string" },
+                    "token": { "type": "string" }
                     }
                   }
                 }
