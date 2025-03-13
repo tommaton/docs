@@ -47,7 +47,7 @@
             "group": "Endpoint Examples",
             "pages": [
               "api-reference/endpoint/auth/post",
-              "api-reference/endpoint/payment/post",
+              "api-reference/endpoint/payment/post"
             ]
           }
         ]
