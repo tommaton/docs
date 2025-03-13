@@ -10,12 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://apidocs.myxspend.com/v1"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "url": "https://api.myxspend.com/v1"
     }
   ],
   "paths": {
@@ -60,6 +55,7 @@
     "/payment/process": {
       "post": {
         "description": "Process a payment transaction",
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "description": "Plant to add to the store",
           "content": {
