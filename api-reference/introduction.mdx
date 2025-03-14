@@ -17,7 +17,7 @@ MyXSpend will complete the **Know Your Customer (KYC)** verification process for
 Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/api-reference/webhook/postback) for detailed integration steps.
 
 ### Step 4: Authenticate API Requests  
-Use the [/api-reference/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
+Use the [/auth/login`](/api-reference/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
 
 ### Step 5: Process a Payment  
 Use the [payment/process](/api-reference/endpoint/payment/post) endpoint to initiate a payment transaction.
