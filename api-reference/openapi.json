@@ -48,18 +48,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "required": ["email", "password"],
-                  "properties": {
-                    "email": {
-                      "description": "Email address used to loginsdfsdf",
-                      "type": "string"
-                    },
-                    "password": {
-                      "description": "Password used to login",
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -161,13 +150,19 @@
           "currency": {
             "description": "Currency",
             "type": "string",
-            "enum": ["USD", "EUR"]
+            "enum": [
+              "USD",
+              "EUR"
+            ]
           }
         }
       },
       "Login": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "description": "Email address used to login",
@@ -179,8 +174,46 @@
           }
         }
       },
+      "LoginResponse": {
+        "type": "object",
+        "required": [
+          "email",
+          "accountId",
+          "roles",
+          "token",
+          "redirectPath"
+        ],
+        "properties": {
+          "email": {
+            "description": "Email address of logged in user",
+            "type": "string"
+          },
+          "accountId": {
+            "description": "Account Id (not to be confused with Company Id)",
+            "type": "string"
+          },
+          "roles": {
+            "description": "Array of roles assigned to the user",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "token": {
+            "description": "Bearer token",
+            "type": "string"
+          },
+          "redirectPath": {
+            "description": "Path to redirect after login",
+            "type": "string"
+          }
+        }
+      },
       "Error": {
-        "required": ["errorCode", "description"],
+        "required": [
+          "errorCode",
+          "description"
+        ],
         "type": "object",
         "properties": {
           "errorCode": {
