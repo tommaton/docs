@@ -31,20 +31,6 @@
         "responses": {
           "200": {
             "description": "Plant response",
-            "headers": {
-              "X-Rate-Limit-Remaining": {
-                "description": "Number of requests left",
-                "schema": {
-                  "type": "integer"
-                }
-              },
-              "X-Custom-Header": {
-                "description": "A custom response header",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
             "content": {
               "application/json": {
                 "schema": {
@@ -85,24 +71,10 @@
         "responses": {
           "200": {
             "description": "plant response",
-            "headers": {
-      "X-Rate-Limit-Remaining": {
-        "description": "The number of requests left for the time window",
-        "schema": {
-          "type": "integer"
-        }
-      },
-      "Content-Type": {
-        "description": "Content type of the response",
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/PaymentSuccessful"
                 }
               }
             }
@@ -125,19 +97,47 @@
     "schemas": {
       "Payment": {
         "required": [
-          "name"
+          "firstName",
+          "lastName",
+          "customerOrderId",
+          "email",
+          "phoneNo",
+          "amount",
+          "currency"
         ],
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
+          "firstName": {
+            "description": "Customer first name",
             "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "lastName": {
+            "description": "Customer last name",
             "type": "string"
           }
         }
+      },
+      "PaymentRespone": {
+        "allOf": [
+          {
+            "required": [
+              "email",
+              "password"
+            ],
+            "type": "object",
+            "properties": {
+              "email": {
+                "description": "Email address used to login",
+                "type": "string"
+              },
+              "password": {
+                "description": "Password used to login",
+                "type": "string"
+                
+              }
+            }
+          }
+        ]
       },
       "Login": {
         "allOf": [
