@@ -17,6 +17,7 @@
     "/auth/login": {
       "post": {
         "description": "Authenticate and retrieve a bearer token and headers",
+        
         "requestBody": {
           "description": "Get details to use for future Process Payments",
           "content": {
@@ -31,10 +32,24 @@
         "responses": {
           "200": {
             "description": "Plant response",
+            "headers": {
+              "X-Rate-Limit-Remaining": {
+                "description": "Number of requests left",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Custom-Header": {
+                "description": "A custom response header",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/Login"
                 }
               }
             }
@@ -74,7 +89,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentSuccessful"
+                  "$ref": "#/components/schemas/Payment"
                 }
               }
             }
@@ -116,28 +131,6 @@
             "type": "string"
           }
         }
-      },
-      "PaymentRespone": {
-        "allOf": [
-          {
-            "required": [
-              "email",
-              "password"
-            ],
-            "type": "object",
-            "properties": {
-              "email": {
-                "description": "Email address used to login",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password used to login",
-                "type": "string"
-                
-              }
-            }
-          }
-        ]
       },
       "Login": {
         "allOf": [
