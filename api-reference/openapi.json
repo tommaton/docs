@@ -75,6 +75,17 @@
             "X-API-KEY":[]
           }
         ],
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key required for authentication"
+          }
+        ],
         "requestBody": {
           "description": "Payment details",
           "content": {
