@@ -71,7 +71,8 @@
         "description": "Process a payment transaction",
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "X-API-KEY":[]
           }
         ],
         "requestBody": {
@@ -111,7 +112,7 @@
     }
   },
   "webhooks": {
-    "/plant/webhook": {
+    "/postback/webhook": {
       "post": {
         "description": "Information about a new plant added to the store",
         "requestBody": {
