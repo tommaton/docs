@@ -1,7 +1,45 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Processing Payments with MyXSpend API'
 ---
+
+# Processing Payments with MyXSpend API
+
+## 1. Introduction
+The MyXSpend API enables clients to process payments on behalf of their users. This guide outlines the key steps required to integrate with the MyXSpend platform and successfully process payments.
+
+## 2. API Endpoint
+Base API URL:  
+`https://api.myxspend.com/v1/`
+
+## 3. Steps to Process Payments
+
+### Step 1: Merchant Registration  
+Sign up as a merchant at [MyXSpend Dashboard](https://myxspend.com/dashboard). This step creates an account for your organization.
+
+### Step 2: KYC Verification  
+MyXSpend will complete the **Know Your Customer (KYC)** verification process for your account. This step is mandatory before processing payments.
+
+### Step 3: Configure PostBack URL  
+Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/webhook/postback) for detailed integration steps.
+
+### Step 4: Authenticate API Requests  
+Use the [/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests.
+
+### Step 5: Process a Payment  
+Use the `/v1/payment/process` endpoint to initiate a payment transaction.
+
+### Step 6: Include Required Headers  
+Ensure the following headers are included in requests to the [payment/process](/endpoint/payment/post) endpoint:
+
+<Note>
+  - **X-API-KEY**: Retrieved from the `/login` response.
+  - **X-COMPANY-ID**: Retrieved from the `/login` response.
+</Note>
+
+By following these steps, merchants can successfully integrate with MyXSpend and securely process payments.
+
+
 
 <Note>
   If you're not looking to build API reference documentation, you can delete
