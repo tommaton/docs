@@ -71,19 +71,10 @@
         "description": "Process a payment transaction",
         "security": [
           {
-            "bearerAuth": [],
-            "X-API-KEY":[]
-          }
-        ],
-        "parameters": [
+            "bearerAuth": []
+          },
           {
-            "name": "X-API-KEY",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "API key required for authentication"
+            "ApiKeyAuth": []
           }
         ],
         "requestBody": {
@@ -265,6 +256,11 @@
         "type": "http",
         "scheme": "bearer"
       }
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      },
     }
   }
 }
