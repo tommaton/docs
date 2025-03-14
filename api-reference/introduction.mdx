@@ -1,18 +1,12 @@
 ---
 title: 'Introduction'
-description: 'Processing Payments with MyXSpend APIsdfsd'
+description: 'Processing Payments with MyXSpend API'
 ---
 
-# Processing Payments with MyXSpend API
-
-## 1. Introduction
+## Introduction
 The MyXSpend API enables clients to process payments on behalf of their users. This guide outlines the key steps required to integrate with the MyXSpend platform and successfully process payments.
 
-## 2. API Endpoint
-Base API URL:  
-`https://api.myxspend.com/v1/`
-
-## 3. Steps to Process Payments
+## Steps to Process Payments
 
 ### Step 1: Merchant Registration  
 Sign up as a merchant at [MyXSpend Dashboard](https://myxspend.com/dashboard). This step creates an account for your organization.
@@ -24,17 +18,17 @@ MyXSpend will complete the **Know Your Customer (KYC)** verification process for
 Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/webhook/postback) for detailed integration steps.
 
 ### Step 4: Authenticate API Requests  
-Use the [/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests.
+Use the [/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
 
 ### Step 5: Process a Payment  
-Use the `/v1/payment/process` endpoint to initiate a payment transaction.
+Use the [payment/process](/endpoint/payment/post) endpoint to initiate a payment transaction.
 
-### Step 6: Include Required Headers  
+### Step 6: Include Required Headers and Bearer Token 
 Ensure the following headers are included in requests to the [payment/process](/endpoint/payment/post) endpoint:
 
 <Note>
-  - **X-API-KEY**: Retrieved from the `/login` response.
-  - **X-COMPANY-ID**: Retrieved from the `/login` response.
+  - **X-API-KEY**: Retrieved from the `/auth/login` response header.
+  - **X-COMPANY-ID**: Retrieved from the `/auth/login` response header
 </Note>
 
 By following these steps, merchants can successfully integrate with MyXSpend and securely process payments.
