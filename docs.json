@@ -44,9 +44,14 @@
             ]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Authorisation",
             "pages": [
               "api-reference/endpoint/auth/post",
+            ]
+          },
+          {
+            "group": "Payments",
+            "pages": [
               "api-reference/endpoint/payment/post"
             ]
           }
