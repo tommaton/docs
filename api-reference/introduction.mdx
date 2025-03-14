@@ -14,16 +14,16 @@ Sign up as a merchant at [MyXSpend Dashboard](https://myxspend.com/dashboard). T
 MyXSpend will complete the **Know Your Customer (KYC)** verification process for your account. This step is mandatory before processing payments.
 
 ### Step 3: Configure PostBack URL  
-Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/webhook/postback) for detailed integration steps.
+Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/api-reference/webhook/postback) for detailed integration steps.
 
 ### Step 4: Authenticate API Requests  
-Use the [/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
+Use the [/api-reference/auth/login`](/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
 
 ### Step 5: Process a Payment  
-Use the [payment/process](/endpoint/payment/post) endpoint to initiate a payment transaction.
+Use the [payment/process](/api-reference/endpoint/payment/post) endpoint to initiate a payment transaction.
 
 ### Step 6: Include Required Headers and Bearer Token 
-Ensure the following headers are included in requests to the [payment/process](/endpoint/payment/post) endpoint:
+Ensure the following headers are included in requests to the [payment/process](/api-reference/endpoint/payment/post) endpoint:
 
 <Note>
   - **X-API-KEY**: Retrieved from the `/auth/login` response header.
@@ -32,33 +32,3 @@ Ensure the following headers are included in requests to the [payment/process](/
 
 By following these steps, merchants can successfully integrate with MyXSpend and securely process payments.
 
-
-
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
-
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
-
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
-```
