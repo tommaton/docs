@@ -46,7 +46,7 @@
           {
             "group": "Authorisation",
             "pages": [
-              "api-reference/endpoint/auth/post",
+              "api-reference/endpoint/auth/post"
             ]
           },
           {
