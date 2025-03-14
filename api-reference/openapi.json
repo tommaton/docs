@@ -1,7 +1,7 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.0",
   "info": {
-    "title": "MyxSpend AP",
+    "title": "MyxSpend API",
     "description": "API for processing payments via MyxSpend",
     "license": {
       "name": "MIT"
@@ -17,9 +17,8 @@
     "/auth/login": {
       "post": {
         "description": "Authenticate and retrieve a bearer token and headers",
-        
         "requestBody": {
-          "description": "Get details to use for future Process Payments",
+          "description": "Get your details to use for future Process Payments. Note, your API Key (X-API-KEY) and Company Id (X-COMPANY-ID) are returned within the response headers",
           "content": {
             "application/json": {
               "schema": {
@@ -31,16 +30,16 @@
         },
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful response",
             "headers": {
-              "X-Rate-Limit-Remaining": {
-                "description": "Number of requests left",
+              "X-API-KEY": {
+                "description": "This is your API KEY",
                 "schema": {
-                  "type": "integer"
+                  "type": "string"
                 }
               },
-              "X-Custom-Header": {
-                "description": "A custom response header",
+              "X-COMPANY-ID": {
+                "description": "Your company ID",
                 "schema": {
                   "type": "string"
                 }
@@ -54,9 +53,8 @@
               }
             }
           },
-
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -71,9 +69,13 @@
     "/payment/process": {
       "post": {
         "description": "Process a payment transaction",
-        "security": [{ "bearerAuth": [] }],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "Payment details",
           "content": {
             "application/json": {
               "schema": {
@@ -85,7 +87,7 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Successful payment response",
             "content": {
               "application/json": {
                 "schema": {
@@ -95,7 +97,7 @@
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -116,7 +118,6 @@
           "lastName",
           "customerOrderId",
           "email",
-          "phoneNo",
           "amount",
           "currency"
         ],
@@ -129,36 +130,46 @@
           "lastName": {
             "description": "Customer last name",
             "type": "string"
+          },
+          "customerOrderId": {
+            "description": "Customer order id (must be a unique id for each customer - recommend UUID format)",
+            "type": "string"
+          },
+          "email": {
+            "description": "Customer email address",
+            "type": "string"
+          },
+          "phoneNo": {
+            "description": "Customer phone number",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Invoice amount",
+            "type": "number"
+          },
+          "currency": {
+            "description": "Currency",
+            "type": "string",
+            "enum": ["USD", "EUR"]
           }
         }
       },
       "Login": {
-        "allOf": [
-          {
-            "required": [
-              "email",
-              "password"
-            ],
-            "type": "object",
-            "properties": {
-              "email": {
-                "description": "Email address used to login",
-                "type": "string"
-              },
-              "password": {
-                "description": "Password used to login",
-                "type": "string"
-                
-              }
-            }
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "description": "Email address used to login",
+            "type": "string"
+          },
+          "password": {
+            "description": "Password used to login",
+            "type": "string"
           }
-        ]
+        }
       },
       "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
+        "required": ["errorCode", "description"],
         "type": "object",
         "properties": {
           "errorCode": {
