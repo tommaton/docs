@@ -257,7 +257,7 @@
         "scheme": "bearer"
       }
       "ApiKeyAuth": {
-        "type": "apiKey",
+        "type": "http",
         "in": "header",
         "name": "X-API-KEY"
       },
