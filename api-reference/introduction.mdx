@@ -1,20 +1,20 @@
 ---
 title: 'Introduction'
-description: 'Processing Payments with MyXSpend API'
+description: 'Processing Payments with MyXspend API'
 ---
 
-The MyXSpend API enables clients to process payments on behalf of their users. This guide outlines the key steps required to integrate with the MyXSpend platform and successfully process payments.
+The MyXspend API enables clients to process payments on behalf of their users. This guide outlines the key steps required to integrate with the MyXSpend platform and successfully process payments.
 
 ## Steps to Process Payments
 
 ### Step 1: Merchant Registration  
-Sign up as a merchant at [MyXSpend Dashboard](https://myxspend.com/dashboard). This step creates an account for your organization.
+Sign up as a merchant at [MyXspend Dashboard](https://myxspend.com/dashboard). This step creates an account for your organization.
 
 ### Step 2: KYB Verification  
-MyXSpend will complete the **Know Your Business (KYB)** verification process for your account. This step is mandatory before processing payments.
+MyXspend will complete the **Know Your Business (KYB)** verification process for your account. This step is mandatory before processing payments.
 
 ### Step 3: Configure PostBack URL  
-Add your **PostBack URL** in the MyXSpend portal. This ensures MyXSpend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/api-reference/webhook/postback) for detailed integration steps.
+Add your **PostBack URL** in the MyXspend portal. This ensures MyXspend sends transaction status updates to your system upon payment confirmation. Refer to [PostBack URL Documentation](/api-reference/webhook/postback) for detailed integration steps.
 
 ### Step 4: Authenticate API Requests  
 Use the [/auth/login`](/api-reference/endpoint/auth/post) endpoint to authenticate your API calls. Upon successful authentication, this endpoint returns a **Bearer Token**, which must be included in all subsequent requests along with the API KEY and Company Id in the **Response Headers**
