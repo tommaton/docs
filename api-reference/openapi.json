@@ -69,7 +69,13 @@
     "/payment/process": {
       "post": {
         "description": "Process a payment transaction",
-        
+        "security": [
+          {
+            "bearerAuth": [],
+            "apiKeyAuth": [],
+            "companyId": []
+          }
+        ],
         "requestBody": {
           "description": "Payment details",
           "content": {
