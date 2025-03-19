@@ -72,7 +72,8 @@
         "security": [
           {
             "bearerAuth": [],
-            "ApiKeyAuth": []
+            "apiKeyAuth": [],
+            "companyId": []
           }
         ],
         "requestBody": {
@@ -254,10 +255,15 @@
         "type": "http",
         "scheme": "bearer"
       },
-      "ApiKeyAuth": {
+      "apiKeyAuth": {
         "type": "apiKey",
         "in": "header",
         "name": "X-API-KEY"
+      },
+      "companyId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-COMPANY-ID"
       }
     }
   }
