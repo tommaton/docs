@@ -255,7 +255,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
-      }
+      },
       "ApiKeyAuth": {
         "type": "http",
         "in": "header",
