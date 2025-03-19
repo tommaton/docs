@@ -71,7 +71,7 @@
         "description": "Process a payment transaction",
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
             "ApiKeyAuth": []
           }
         ],
@@ -258,7 +258,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-KEY"
-      },
+      }
     }
   }
 }
