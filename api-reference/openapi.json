@@ -93,7 +93,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Payment"
+                  "$ref": "#/components/schemas/PaymentResponse"
                 }
               }
             }
@@ -159,6 +159,34 @@
           }
         }
       },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "description": "Email address of logged in user",
+            "type": "string"
+          },
+          "accountId": {
+            "description": "Account Id (not to be confused with Company Id)",
+            "type": "string"
+          },
+          "roles": {
+            "description": "Array of roles assigned to the user",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "token": {
+            "description": "Bearer token",
+            "type": "string"
+          },
+          "redirectPath": {
+            "description": "Path to redirect after login",
+            "type": "string"
+          }
+        }
+      },
       "Login": {
         "type": "object",
         "required": [
@@ -178,13 +206,6 @@
       },
       "LoginResponse": {
         "type": "object",
-        "required": [
-          "email",
-          "accountId",
-          "roles",
-          "token",
-          "redirectPath"
-        ],
         "properties": {
           "email": {
             "description": "Email address of logged in user",
