@@ -162,27 +162,36 @@
       "PaymentResponse": {
         "type": "object",
         "properties": {
-          "email": {
-            "description": "Email address of logged in user",
+          "country": {
+            "description": "Country of the request",
             "type": "string"
           },
-          "accountId": {
-            "description": "Account Id (not to be confused with Company Id)",
+          "CreatedOn": {
+            "description": "Date created",
             "type": "string"
           },
-          "roles": {
-            "description": "Array of roles assigned to the user",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "token": {
-            "description": "Bearer token",
+          "currency": {
+            "description": "Curency of the payment request",
             "type": "string"
           },
-          "redirectPath": {
-            "description": "Path to redirect after login",
+          "customerOrderId": {
+            "description": "Customer order id (Merchant/Company reference)",
+            "type": "string"
+          },
+          "PaymentLink": {
+            "description": "Payment link (where to send users to make payment)",
+            "type": "string"
+          },
+          "PaymentLinkCode": {
+            "description": "Idetification of the requested payment",
+            "type": "string"
+          },
+          "responseCode": {
+            "description": "Response code of the request",
+            "type": "string"
+          },
+          "responseMessage": {
+            "description": "Any message returned from the request",
             "type": "string"
           }
         }
