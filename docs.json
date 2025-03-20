@@ -43,6 +43,17 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "FAQ's",
+        "groups": [
+          {
+            "group": "FAQ's",
+            "pages": [
+              "faqs"
+            ]
+          }
+        ]
       }
     ]
   },
