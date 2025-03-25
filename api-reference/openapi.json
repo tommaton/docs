@@ -187,7 +187,7 @@
             "type": "string"
           },
           "responseCode": {
-            "description": "Response code of the request",
+            "description": "DEPRECATED - please use the response code in the  http header",
             "type": "string"
           },
           "responseMessage": {
