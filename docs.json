@@ -59,7 +59,7 @@
   },
   "logo": {
     "light": "/logo/myxspend.svg",
-    "dark": "/logo/logo.svg"
+    "dark": "/logo/myxspend-small.png"
   },
   "navbar": {
     "links": [
