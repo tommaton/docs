@@ -156,10 +156,6 @@
               "USD",
               "EUR"
             ]
-          },
-          "companyId": {
-            "description": "This is your companyId retrieved from the response headers X_COMPANY_ID",
-            "type": "string"
           }
         }
       },
