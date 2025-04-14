@@ -16,11 +16,12 @@
           {
             "group": "Getting Started",
             "pages": [
-              "api-reference/introduction"
+              "getting-started",
+              "testing-integration"
             ]
           }
         ]
-      }
+      },
       {
         "tab": "API Reference",
         "groups": [
