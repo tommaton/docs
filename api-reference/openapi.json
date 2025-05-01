@@ -156,6 +156,14 @@
               "USD",
               "EUR"
             ]
+          },
+          "success_url": {
+            "description": "The url MyXspend will redirect the user to after a successful payment",
+            "type": "string"
+          },
+          "fail_url": {
+            "description": "The url MyXspend will redirect the user to after a failed payment",
+            "type": "string"
           }
         }
       },
