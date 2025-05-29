@@ -27,15 +27,13 @@ The following query parameters will be included in the GET request:
   - `FAILED`: Payment failed (e.g. invalid card, failed KYC).
 - **dateTime**: The date of successful payment in `YYYY-MM-DD` format (GMT timezone). If the payment failed or expired, this will be `null`.
 - **amount**: The amount paid by the user. This may differ from the amount in the original /process request if the merchant allows flexibility.
-- **currency:**  The currency in which the user paid. This may differ from the original currency in the /process request if the merchant accepts multiple currencies.
+- **currency**: The currency in which the user paid. This may differ from the original currency in the /process request if the merchant accepts multiple currencies.
 
 ### 2.2 Important Considerations
 
 - If a transaction status is `EXPIRED`, multiple callbacks may be received.
 - The `SUCCESSFUL` status is definitive and will not change.
 - Only HTTP GET requests are supported for PostBack URLs.
-
-
 - **Order of Parameters Matters**: The query parameters must appear **in the exact order** shown above, and their **casing** must match exactly. This is critical for correct signature validation.
 - **Signed as a String**: The full URL with parameters is treated as a single string before signing.
 
@@ -78,48 +76,49 @@ We use your **API Key** to generate the signature. You can find your API Key eit
 - On the **MyXspend Portal**, or
 - In the response header of the **Login API** request.
 
-### 2.5 Sample Code to construct Signature for Validation 
+### 2.5 Sample Code to construct Signature for Validation
 
-> **// Code Sample to generate signature header in Javascript**\
-> const crypto = require('crypto');
->
-> function createSigningHeader(queryString, apiKey) {\
->     // Create HMAC SHA-256 signature\
->     const hmac = crypto.createHmac('sha256', apiKey);\
->     hmac.update(queryString);\
->     const signatureBase64 = hmac.digest('base64');
->
->     // Return header map\
->     return {\
->         'X-Signature': signatureBase64\
->     };\
-> }
->
-> // Example usage:
->
-> const postBackUri = https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR;
->
-> const headers = createSigningHeader(postBackUri, 'YOUR_API_KEY');\
-> console.log(headers);
+```javascript
+// Code Sample to generate signature header in Javascript
+const crypto = require('crypto');
 
-> **// Code Sample to generate signature header in php**
->
-> function createSigningHeader(\$queryString, \$apiKey) {\
->     // Create HMAC SHA-256 signature\
->     \$hmac = hash_hmac('sha256', \$queryString, \$apiKey, true);
->
->     // Encode in Base64\
->     \$signatureBase64 = base64_encode(\$hmac);
->
->     // Return header array\
->     return [\
->         'X-Signature' =\> \$signatureBase64\
->     ];\
-> }
->
-> // Example usage:
->
-> \$postBackUri = 'https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR';
->
-> \$headers = createSigningHeader(\$postBackUri, 'YOUR_API_KEY');\
-> print_r(\$headers);
+function createSigningHeader(queryString, apiKey) {
+    // Create HMAC SHA-256 signature
+    const hmac = crypto.createHmac('sha256', apiKey);
+    hmac.update(queryString);
+    const signatureBase64 = hmac.digest('base64');
+
+    // Return header map
+    return {
+        'X-Signature': signatureBase64
+    };
+}
+
+// Example usage:
+const postBackUri = "https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR";
+
+const headers = createSigningHeader(postBackUri, 'YOUR_API_KEY');
+console.log(headers);
+```
+
+```php
+// Code Sample to generate signature header in php
+function createSigningHeader($queryString, $apiKey) {
+    // Create HMAC SHA-256 signature
+    $hmac = hash_hmac('sha256', $queryString, $apiKey, true);
+
+    // Encode in Base64
+    $signatureBase64 = base64_encode($hmac);
+
+    // Return header array
+    return [
+        'X-Signature' => $signatureBase64
+    ];
+}
+
+// Example usage:
+$postBackUri = 'https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR';
+
+$headers = createSigningHeader($postBackUri, 'YOUR_API_KEY');
+print_r($headers);
+```
