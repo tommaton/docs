@@ -1,32 +1,125 @@
 ---
-title: 'Implementing PostBackUrl in MyXspend'
-openapi: 'WEBHOOK /postback/webhook'
-sidebarTitle: 'Postback'
+title: "Implementing PostBackUrl in MyXspend"
+openapi: "WEBHOOK /postback/webhook"
+sidebarTitle: "Postback"
 ---
 
 ## 1. Introduction
+
 This document outlines the steps to configure a PostBack URL within the MyXspend portal. A PostBack URL enables MyXspend to notify merchants about transaction status updates in real-time.
 
 ## 2. Overview
+
 To receive transaction status updates via a postback request, merchants must configure their PostBack URL within the MyXspend portal. When a transaction reaches a terminal state, MyXspend will trigger an HTTP GET request to the specified PostBack URL, appending relevant query parameters.
 
 <Frame>
-  <img src="/images/post-back-url.png"/>
+  ![](/images/post-back-url.png)
 </Frame>
 
 ### 2.1 PostBack URL Query Parameters
+
 The following query parameters will be included in the GET request:
 
 - **customerOrderId**: The unique transaction identifier provided by the merchant in the `/payment/process` API request.
 - **status**: The final status of the transaction, which can be one of the following values:
   - `SUCCESSFUL`: Indicates that the transaction was completed successfully.
   - `EXPIRED`: Indicates that the transaction was not completed within the allowed time frame.
-- **dateTime**: The timestamp of the final status update in ISO 8601 format (e.g., `YYYY-MM-DDTHH:MM:SSZ`).
+  - `FAILED`: Payment failed (e.g. invalid card, failed KYC).
+- **dateTime**: The date of successful payment in `YYYY-MM-DD` format (GMT timezone). If the payment failed or expired, this will be `null`.
+- **amount**: The amount paid by the user. This may differ from the amount in the original /process request if the merchant allows flexibility.
+- **currency:**  The currency in which the user paid. This may differ from the original currency in the /process request if the merchant accepts multiple currencies.
 
 ### 2.2 Important Considerations
+
 - If a transaction status is `EXPIRED`, multiple callbacks may be received.
 - The `SUCCESSFUL` status is definitive and will not change.
 - Only HTTP GET requests are supported for PostBack URLs.
 
+
+- **Order of Parameters Matters**: The query parameters must appear **in the exact order** shown above, and their **casing** must match exactly. This is critical for correct signature validation.
+- **Signed as a String**: The full URL with parameters is treated as a single string before signing.
+
 By properly configuring a PostBack URL, merchants can seamlessly receive and process transaction status updates, ensuring accurate order management and real-time status tracking.
 
+### 2.3 How We Construct the Payload
+
+We generate the signed payload by taking the **callback URL** you provided in the MyXspend portal and appending the following query parameters:
+
+```
+?customerOrderId={CUSTOMER_ORDER_ID}&status={STATUS}&dateTime={DATE}&amount={AMOUNT}&currency={CURRENCY}
+```
+
+### Example
+
+If your registered callback URL is:
+
+```
+https://mycallbackurl.com/myxspend
+```
+
+#### ✅ Successful Payment
+
+```
+https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR
+```
+
+#### ❌ Failed Payment
+
+```
+https://mycallbackurl/myxspend?customerOrderId=123456&status=FAILED&dateTime=null&amount=18
+```
+
+### 2.4 Signature Key
+
+To ensure the security of our webhook calls, we sign each payload using the **HMAC-SHA256** algorithm and then encoded in Base64 format. The resulting signature is included in the `X-Signature` header of the webhook request.
+
+We use your **API Key** to generate the signature. You can find your API Key either:
+
+- On the **MyXspend Portal**, or
+- In the response header of the **Login API** request.
+
+### 2.5 Sample Code to construct Signature for Validation 
+
+> **// Code Sample to generate signature header in Javascript**\
+> const crypto = require('crypto');
+>
+> function createSigningHeader(queryString, apiKey) {\
+>     // Create HMAC SHA-256 signature\
+>     const hmac = crypto.createHmac('sha256', apiKey);\
+>     hmac.update(queryString);\
+>     const signatureBase64 = hmac.digest('base64');
+>
+>     // Return header map\
+>     return {\
+>         'X-Signature': signatureBase64\
+>     };\
+> }
+>
+> // Example usage:
+>
+> const postBackUri = https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR;
+>
+> const headers = createSigningHeader(postBackUri, 'YOUR_API_KEY');\
+> console.log(headers);
+
+> **// Code Sample to generate signature header in php**
+>
+> function createSigningHeader(\$queryString, \$apiKey) {\
+>     // Create HMAC SHA-256 signature\
+>     \$hmac = hash_hmac('sha256', \$queryString, \$apiKey, true);
+>
+>     // Encode in Base64\
+>     \$signatureBase64 = base64_encode(\$hmac);
+>
+>     // Return header array\
+>     return [\
+>         'X-Signature' =\> \$signatureBase64\
+>     ];\
+> }
+>
+> // Example usage:
+>
+> \$postBackUri = 'https://mycallbackurl.com/myxspend?customerOrderId=123456&status=SUCCESSFUL&dateTime=2025-05-29&amount=18.0&currency=EUR';
+>
+> \$headers = createSigningHeader(\$postBackUri, 'YOUR_API_KEY');\
+> print_r(\$headers);
